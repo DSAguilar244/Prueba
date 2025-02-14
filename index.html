@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi San Valentín 💖</title>
+    <style>
+        /* Estilo general */
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ffdde1, #ffafbd);
+            position: relative;
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+        body.dark-mode {
+            background: linear-gradient(135deg, #1e1e2f, #3a3a52);
+            color: #ff7eb9;
+        }
+
+        /* Fondo animado con corazones */
+        .background-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ff4d6d;
+            transform: rotate(-45deg);
+            animation: float 5s infinite ease-in-out, heartbeat 2s infinite alternate;
+        }
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: inherit;
+            border-radius: 50%;
+        }
+        .heart::before {
+            top: -10px;
+            left: 0;
+        }
+        .heart::after {
+            top: 0;
+            left: 10px;
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(-45deg);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-20px) rotate(-45deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-40px) rotate(-45deg);
+                opacity: 0;
+            }
+        }
+        @keyframes heartbeat {
+            from {
+                transform: scale(1) rotate(-45deg);
+            }
+            to {
+                transform: scale(1.2) rotate(-45deg);
+            }
+        }
+
+        /* Contenedor principal */
+        .container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: clamp(24px, 5vw, 48px);
+            color: #ff4d6d;
+            animation: fadeIn 2s ease-in-out, bounce 1.5s infinite alternate;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 15px 30px;
+            font-size: clamp(16px, 3vw, 20px);
+            border: none;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin: 10px;
+        }
+        .yes {
+            background: #ff4d6d;
+            color: white;
+        }
+        .yes:hover {
+            background: #ff708d;
+            transform: scale(1.1) rotate(5deg);
+        }
+        .no {
+            background: #bbb;
+            color: black;
+            position: absolute;
+        }
+        .no:hover {
+            background: #d9d9d9;
+            transform: scale(1.1) rotate(-5deg);
+        }
+        .hidden {
+            display: none;
+        }
+        .message {
+            font-size: clamp(18px, 4vw, 28px);
+            color: #ff4d6d;
+            animation: fadeIn 2s ease-in-out, bounce 1.5s infinite alternate;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes bounce {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Video de fondo */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            opacity: 0.8;
+            filter: brightness(0.8);
+        }
+
+        /* Botón modo oscuro */
+        .dark-mode-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            font-size: clamp(12px, 2vw, 16px);
+        }
+        .dark-mode-btn:hover {
+            background: #ff708d;
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Imágenes decorativas */
+        .decorative-images {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .decorative-image {
+            position: absolute;
+            width: 60px; /* Aumentamos el tamaño */
+            height: 60px;
+            animation: float-around 10s infinite ease-in-out;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2)); /* Agregamos sombra */
+        }
+        @keyframes float-around {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            50% {
+                transform: translate(50px, -50px) rotate(180deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: clamp(20px, 6vw, 36px);
+            }
+            .btn {
+                padding: 10px 20px;
+                font-size: clamp(14px, 3vw, 18px);
+            }
+            .message {
+                font-size: clamp(16px, 4vw, 24px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fondo animado -->
+    <div class="background-hearts" id="hearts"></div>
+    <!-- Botón modo oscuro -->
+    <button class="dark-mode-btn" onclick="toggleDarkMode()">🌙 Modo Oscuro</button>
+    <!-- Pregunta inicial -->
+    <div class="container" id="question">
+        <h1 class="animated-text">¿Quieres ser mi San Valentín? 💖</h1>
+        <div class="buttons">
+            <button class="btn yes" onclick="showLove()">Sí 💘</button>
+            <button class="btn no" id="noBtn">No 💔</button>
+        </div>
+    </div>
+    <!-- Mensaje de amor -->
+    <div class="container hidden" id="loveMessage">
+        <h1 class="message animated-text">¡Sabía que dirías que sí Te Amo! 💕</h1>
+        <p class="message animated-text">Eres la persona más especial para mí, mi pidañita 💖✨</p>
+    </div>
+    <!-- Video de fondo -->
+    <video class="video-background hidden" id="videoBackground" autoplay muted loop>
+        <source src="Happy Birthday Confetti.mp4" type="video/mp4">
+        Tu navegador no soporta videos.
+    </video>
+    <!-- Imágenes decorativas -->
+    <div class="decorative-images" id="decorativeImages"></div>
+    <!-- Confeti -->
+    <div id="confettiContainer"></div>
+    <audio id="backgroundMusic" loop>
+        <source src="Audiocelebracion.mp3" type="audio/mpeg">
+    </audio>
+    <script>
+        // Generar corazones flotantes
+        const heartsContainer = document.getElementById('hearts');
+        for (let i = 0; i < 50; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = `${Math.random() * 100}vw`;
+            heart.style.animationDuration = `${Math.random() * 3 + 3}s`;
+            heart.style.opacity = Math.random();
+            heart.style.width = `${Math.random() * 20 + 10}px`;
+            heart.style.height = heart.style.width;
+            heart.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 70%)`;
+            heartsContainer.appendChild(heart);
+        }
+
+        // Generar imágenes decorativas
+        const decorativeImagesContainer = document.getElementById('decorativeImages');
+        const imageUrls = [
+            "1.jfif",
+        ];
+        for (let i = 0; i < 10; i++) {
+            const img = document.createElement('img');
+            img.src = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+            img.classList.add('decorative-image');
+            img.style.top = `${Math.random() * 100}vh`;
+            img.style.left = `${Math.random() * 100}vw`;
+            img.style.animationDuration = `${Math.random() * 5 + 5}s`;
+            decorativeImagesContainer.appendChild(img);
+        }
+
+        // Botón "No" que se mueve y cambia texto
+        const noBtn = document.getElementById('noBtn');
+        const noTexts = ["No 😅", "¿Enserio querias pulsar que no?", "No me quieres...", "Sigues intentado", "No vas a poder jajajaja"];
+        let moveCount = 0;
+        noBtn.addEventListener('mouseover', () => {
+            moveCount++;
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+            noBtn.textContent = noTexts[Math.min(moveCount, noTexts.length - 1)];
+        });
+
+        // Mostrar mensaje de amor, confeti y activar video de fondo
+        function showLove() {
+            document.getElementById('question').classList.add('hidden');
+            document.getElementById('loveMessage').classList.remove('hidden');
+            startConfetti();
+            toggleDarkMode(); // Activar modo oscuro automáticamente
+            activateVideoBackground(); // Activar video de fondo
+            document.getElementById('backgroundMusic').play();
+        }
+
+        // Lluvia de confeti
+        function startConfetti() {
+            const confettiContainer = document.getElementById('confettiContainer');
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = `${Math.random() * 100}vw`;
+                confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 70%)`;
+                confettiContainer.appendChild(confetti);
+            }
+        }
+
+        // Activar video de fondo
+        function activateVideoBackground() {
+            const videoBackground = document.getElementById('videoBackground');
+            videoBackground.classList.remove('hidden');
+        }
+
+        // Modo oscuro/claro
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        // Iniciar música automáticamente
+        document.getElementById('backgroundMusic').volume = 0.3;
+    </script>
+</body>
+</html>
